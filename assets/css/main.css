@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap");
+* {
+  box-sizing: border-box;
+}
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+#__nuxt {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+#app {
+  background-color: rgb(35, 35, 35);
+  color: rgb(47, 255, 54);
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+/* input {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid green;
+  background-color: black;
+  align-items: center;
+  padding: auto;
+} */
+input[type=text], select {
+  padding: 5px 20px;
+  display: inline-block;
+  border: 1px solid green;
+  box-sizing: border-box;
+  background-color: black;
+  outline: none;
+}
+
+
+textarea,
+textarea:focus,
+textarea:active:focus,
+textarea.active:focus,
+textarea.focus,
+textarea:active.focus,
+textarea.active.focus {
+  outline: none;
+  box-shadow: none;
+}
