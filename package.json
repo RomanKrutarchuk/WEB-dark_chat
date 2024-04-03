@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "web-dark_chat",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,15 +11,11 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.40.0",
-    "http": "^0.0.1-security",
     "nuxt": "^3.11.0",
-    "nuxt-socket-io": "^3.0.13",
-    "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "uuid": "^9.0.1",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
-    "ws": "^8.16.0"
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.4"

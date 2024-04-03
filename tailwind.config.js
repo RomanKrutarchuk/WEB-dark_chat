@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const srcDir = "."
+const srcDir = ".";
 export default {
   content: [
     `${srcDir}/components/**/*.{vue,js,ts}`,
@@ -12,12 +12,20 @@ export default {
     `${srcDir}/app.{js,ts,vue}`,
     `${srcDir}/Error.{js,ts,vue}`,
     `${srcDir}/error.{js,ts,vue}`,
-    `${srcDir}/app.config.{js,ts}`
+    `${srcDir}/app.config.{js,ts}`,
   ],
   theme: {
-    extend: {},
+    colors: {
+      green: "#008200",
+    },
+    width: {
+      600: "600px",
+      screen: "100%",
+    },
+    height: {
+      400: "400px",
+      screen: "100%",
+    },
   },
   plugins: [],
-
-}
-
+};
