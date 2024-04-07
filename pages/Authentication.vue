@@ -10,10 +10,13 @@
 </template>
 
 <script>
+definePageMeta({
+  layout: "navigation",
+});
 export default {
   methods: {
     redirect() {
-      this.$router.push("/main/profile");
+      this.$router.push("/profile");
     },
   },
 };

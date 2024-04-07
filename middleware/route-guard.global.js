@@ -1,9 +1,7 @@
-import { useStore } from "~/stores/";
+import { useStore } from "~/store";
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  const store = useStore();
-  const userIsAuthenticated = store.$state.userProfile.isLoggined;
-  if (isValidRoot(to, userIsAuthenticated)) {
+  if (isValidRoot(to)) {
     return;
   } else {
     console.log("root-guard");
@@ -11,7 +9,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
   }
 });
 
-function isValidRoot(to, userIsAuthenticated) {
+function isValidRoot(to) {
+  const store = useStore();
+  const userIsAuthenticated = store.$state.userProfile.isLoggined;
   if (userIsAuthenticated) {
     return true;
   } else if (to.fullPath === "/" || to.fullPath === "/authentication") {

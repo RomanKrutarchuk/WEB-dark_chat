@@ -28,6 +28,7 @@ export default {
     },
     height: {
       400: "400px",
+      max: "max-content",
       screen: "100%",
     },
   },

@@ -15,6 +15,6 @@ export default defineNuxtConfig({
       "1044712585347-ctp0cq62k0ljekp1q1bka7u390g1sv8d.apps.googleusercontent.com",
   },
   pinia: {
-    storesDirs: ["./stores/**", "./custom-folder/stores/**"],
+    storesDirs: ["./store/**", "./custom-folder/store/**"],
   },
 });
