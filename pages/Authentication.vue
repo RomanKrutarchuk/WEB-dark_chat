@@ -4,15 +4,17 @@
       <p class="my-2">Authentication</p>
       <input class="my-2 bg-transparent" type="text" placeholder="email" />
       <input class="my-2 bg-transparent" type="text" placeholder="password" />
-      <AuthenticationComponent class="my-2" />
+      <AuthenticationComponent @succes="redirect" class="my-2" />
     </div>
   </div>
 </template>
 
-<script setup></script>
-
-<style>
-.max {
-  width: max-content;
-}
-</style>
+<script>
+export default {
+  methods: {
+    redirect() {
+      this.$router.push("/main/profile");
+    },
+  },
+};
+</script>

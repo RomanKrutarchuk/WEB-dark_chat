@@ -30,7 +30,7 @@ export default {
           body: { token: credential },
         }).then((userProfileData) => {
           this.assignUserData(userProfileData);
-          this.$router.push("/profile");
+          this.$emit("succes");
         });
       }
     },

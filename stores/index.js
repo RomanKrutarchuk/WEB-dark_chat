@@ -4,7 +4,7 @@ const store = {
   id: "store",
   state: () => ({
     userProfile: {
-      online: false,
+      isLoggined: false,
       email: null,
       name: null,
     },
@@ -13,9 +13,9 @@ const store = {
     assignUserProfileData(userProfileData) {
       console.log("userProfileData", userProfileData);
       const { email, name } = userProfileData;
-      userProfile.email = email;
-      userProfile.name = name;
-      userProfile.online = true;
+      this.userProfile.email = email;
+      this.userProfile.name = name;
+      this.userProfile.isLoggined = true;
     },
   },
 };
