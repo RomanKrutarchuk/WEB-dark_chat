@@ -1,17 +1,11 @@
 <template>
-  <div id="page"></div>
+  <div id="page" class="flex flex-col">
+    <NuxtLink to="/authentication">authentication</NuxtLink>
+    <NuxtLink to="/main/dashboard">dashboard</NuxtLink>
+    <NuxtLink to="/main/profile">profile</NuxtLink>
+  </div>
 </template>
-<script setup>
-import { io } from "socket.io-client";
-const socket = io("https://api-1-0-0fru.onrender.com/");
-socket.on("socket send message", (res) => {
-  console.log({ socket: res });
-});
-await $fetch("https://api-1-0-0fru.onrender.com/").then((res) => {
-  console.log(res);
-});
 
-definePageMeta({
-  layout: false,
-});
+<script setup>
+
 </script>

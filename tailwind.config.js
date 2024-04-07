@@ -20,7 +20,11 @@ export default {
     },
     width: {
       600: "600px",
+      400: "400px",
+      300: "300px",
+      200: "200px",
       screen: "100%",
+      max: "max-content",
     },
     height: {
       400: "400px",
