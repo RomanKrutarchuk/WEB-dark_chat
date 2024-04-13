@@ -3,6 +3,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "nuxt-vue3-google-signin", "@pinia/nuxt"],
+  plugins: ["~/plugins/socket"],
   css: ["~/assets/css/main.css"],
   ssr: false,
   vite: {},

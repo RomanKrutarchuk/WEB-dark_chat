@@ -1,5 +1,12 @@
-// import { io } from "socket.io-client";
-
+import { io } from "socket.io-client";
+const socket = io("https://api-1-0-0fru.onrender.com/");
+export default defineNuxtPlugin(() => {
+  return {
+    provide: {
+      socket,
+    },
+  };
+});
 // const socket = io("https://api-1-0-0fru.onrender.com/");
 
 // socket.on("socket send message", (res) => {

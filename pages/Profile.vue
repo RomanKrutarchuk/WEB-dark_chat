@@ -1,6 +1,6 @@
 <template>
   <div id="page" class="flex justify-center items-center">
-    <div id="userProfile" v-if="loading" class="w-600 h-400 border p-2">
+    <div id="userProfile" v-if="loading" class="w-400 h-400 border p-2">
       <div v-for="(field, index) in userProfileFields" :key="index">
         <div v-if="field === 'picture'">
           <img :src="userProfileData[field]" class="" />
@@ -8,15 +8,14 @@
         <div v-else>{{ userProfileData[field] }}</div>
       </div>
     </div>
+    <div class="w-200 h-400 border p-2 overflow-y-scroll">
+      <div id="active user">user</div>
+    </div>
   </div>
 </template>
 
 <script>
 import { useStore } from "~/store";
-
-definePageMeta({
-  layout: "navigation",
-});
 
 export default {
   data() {

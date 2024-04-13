@@ -4,9 +4,11 @@
   </div>
 </template>
 
-<script>
-definePageMeta({
-  layout: "navigation",
+<script setup>
+
+const { $socket } = useNuxtApp();
+$socket.on("socket send message", (res) => {
+  console.log({ socket: res });
 });
-export default {};
+
 </script>

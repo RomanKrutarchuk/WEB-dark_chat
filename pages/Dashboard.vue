@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-definePageMeta({
-  layout: "navigation",
-});
+export default {
+
+};
 </script>

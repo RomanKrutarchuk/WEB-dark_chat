@@ -1,11 +1,19 @@
 <template>
-  <div id="default" class="flex items-center justify-center">
-    <slot />
+  <div id="layout default">
+    <div class="w-full h-full flex flex-row">
+      <NuxtLink to="/authentication" class="mx-2">authentication</NuxtLink>
+      <NuxtLink to="/dashboard" class="mx-2">dashboard</NuxtLink>
+      <NuxtLink to="/profile" class="mx-2">profile</NuxtLink>
+      <NuxtLink to="/" class="mx-2">home</NuxtLink>
+    </div>
+    <slot id="page"></slot>
   </div>
 </template>
+
+<script>
+export default {};
+</script>
+
 <style>
-#default {
-  width: 100%;
-  height: 100%;
-}
+
 </style>

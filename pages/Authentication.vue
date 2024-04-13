@@ -10,9 +10,6 @@
 </template>
 
 <script>
-definePageMeta({
-  layout: "navigation",
-});
 export default {
   methods: {
     redirect() {
