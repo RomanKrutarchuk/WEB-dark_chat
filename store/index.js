@@ -42,7 +42,16 @@ export const useStore = defineStore("store", {
         this.userProfile = userProfile_StorageData;
         return;
       }
-      const data = await $fetch(config.public.API_URL + "/userProfileDefault");
+      // const data = await $fetch(config.public.API_URL + "/userProfileDefault");
+      const data = {
+        isLoggined: false,
+        email: null,
+        name: null,
+        picture: null,
+        isOnline: false,
+        data: null,
+        id: null,
+      };
       console.log("store.index.default_user", data);
       this.userProfile = data;
     },
