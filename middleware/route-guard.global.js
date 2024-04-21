@@ -11,10 +11,15 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
 function isValidRoot(to) {
   const store = useStore();
-  const userIsAuthenticated = store.$state.userProfile.isLoggined;
-  if (userIsAuthenticated) {
+  const userIsAuthenticated = async() => {
+    if (store.$state.userProfile) {
+      return await store.$state.userProfile.isLoggined;
+    } else false;
+  };
+
+  if (userIsAuthenticated()) {
     return true;
-  } else if (to.fullPath === "/" || to.fullPath === "/authentication") {
+  } else if (to.fullPath === "/authentication") {
     return true;
   }
   return false;

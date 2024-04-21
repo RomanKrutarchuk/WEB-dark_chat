@@ -1,9 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "nuxt-vue3-google-signin", "@pinia/nuxt"],
-  plugins: ["~/plugins/socket"],
+  plugins: [],
   css: ["~/assets/css/main.css"],
   ssr: false,
   vite: {},
@@ -17,5 +16,17 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ["./store/**", "./custom-folder/store/**"],
+  },
+  runtimeConfig: {
+    public: {
+      API_URL:
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3080"
+          : process.env.API_URL,
+      SOCKET_API_URL:
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3080"
+          : process.env.SOCKET_API_URL,
+    },
   },
 });

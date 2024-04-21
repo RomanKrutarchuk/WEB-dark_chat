@@ -1,14 +1,5 @@
 <template>
-  <div id="page" class="flex flex-col">
-    <p>index page here</p>
-  </div>
+  <div>index page here</div>
 </template>
 
-<script setup>
-
-const { $socket } = useNuxtApp();
-$socket.on("socket send message", (res) => {
-  console.log({ socket: res });
-});
-
-</script>
+<script></script>
