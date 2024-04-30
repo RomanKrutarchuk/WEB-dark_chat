@@ -1,26 +1,15 @@
-import { useStore } from "~/store";
-
+import { useAuthStore } from "~/store/user/auth";
+let loggined = false;
 export default defineNuxtRouteMiddleware((to, from) => {
-  // if (isValidRoot(to)) {
-  //   return;
-  // } else {
-  //   console.log("root-guard");
-  //   return navigateTo("/authentication");
-  // }
-});
-
-function isValidRoot(to) {
-  const store = useStore();
-  const userIsAuthenticated = async() => {
-    if (store.$state.userProfile) {
-      return await store.$state.userProfile.isLoggined;
-    } else false;
-  };
-
-  if (userIsAuthenticated()) {
-    return true;
-  } else if (to.fullPath === "/authentication") {
-    return true;
+  if (!loggined) {
+    console.log("route-guard-check");
+    const store = useAuthStore();
+    if (store.user && store.user.google.email) {
+      loggined = true;
+    } else {
+      if (to.fullPath != "/authentication") {
+        return navigateTo("/authentication");
+      }
+    }
   }
-  return false;
-}
+});

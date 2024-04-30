@@ -10,7 +10,7 @@
 </template>
 <script>
 import GoogleSignInButton from "vue3-google-signin";
-import { useStore } from "~/store";
+import { useAuthStore } from "~/store/user/auth";
 
 export default {
   components: { GoogleSignInButton },
@@ -34,8 +34,8 @@ export default {
       }
     },
     assignUserData(data) {
-      const store = useStore();
-      store.assignUserProfileData(data);
+      const store = useAuthStore();
+      store.login(data);
     },
   },
 };

@@ -5,18 +5,24 @@
         <p class="my-2">Authentication</p>
         <input class="my-2 bg-transparent" type="text" placeholder="email" />
         <input class="my-2 bg-transparent" type="text" placeholder="password" />
-        <AuthenticationComponent @succes="redirect" class="my-2" />
+        <AuthenticationComponent class="my-2" />
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    redirect() {
-      this.$router.push("/profile");
-    },
-  },
-};
+<script setup>
+// import { useAuthStore } from "~/store/users/authStore";
+// import { useUsersStore } from "~/store/users";
+// const usersStore = useUsersStore();
+// const store = useAuthStore();
+
+// console.log("index.usersStore", usersStore);
+// export default {
+//   methods: {
+//     redirect() {
+//       this.$router.push("/profile");
+//     },
+//   },
+// };
 </script>

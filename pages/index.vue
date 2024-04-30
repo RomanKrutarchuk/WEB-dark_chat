@@ -2,4 +2,6 @@
   <div>index page here</div>
 </template>
 
-<script></script>
+<script>
+
+</script>
