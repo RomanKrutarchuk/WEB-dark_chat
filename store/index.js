@@ -1,26 +1,6 @@
-// store/filters.ts
+// store/
 import { defineStore } from "pinia";
-// function getUserProfileFields() {
-//   return {
-//     isLoggined: false,
-//     email: null,
-//     name: null,
-//     picture: null,
-//     isOnline: false,
-//     data: null,
-//   };
-// }
-// function getUserProfileData() {
-//   const userProfile = getUserProfileFields();
-//   // const userProfileSavedData = JSON.parse(localStorage.getItem("userData"));
-//   // console.log("store.index.", { userProfileSavedData });
-//   // if (userProfileSavedData && userProfileSavedData.email)
-//   //   return userProfileSavedData;
-//   // console.log("store.index.",JSON.parse(data));
-//   // const data = localStorage.getItem(store);
-//   // return data.email ? JSON.parse(data) : userProfileDefault;
-//   return userProfile;
-// }
+
 
 export const useStore = defineStore("store", {
   state: () => {
@@ -89,3 +69,26 @@ export const useStore = defineStore("store", {
 // localStorage.setItem('name',value);
 // localStorage.getItem('name')
 // localStorage.removeItem('name')
+
+
+// function getUserProfileFields() {
+//   return {
+//     isLoggined: false,
+//     email: null,
+//     name: null,
+//     picture: null,
+//     isOnline: false,
+//     data: null,
+//   };
+// }
+// function getUserProfileData() {
+//   const userProfile = getUserProfileFields();
+//   // const userProfileSavedData = JSON.parse(localStorage.getItem("userData"));
+//   // console.log("store.index.", { userProfileSavedData });
+//   // if (userProfileSavedData && userProfileSavedData.email)
+//   //   return userProfileSavedData;
+//   // console.log("store.index.",JSON.parse(data));
+//   // const data = localStorage.getItem(store);
+//   // return data.email ? JSON.parse(data) : userProfileDefault;
+//   return userProfile;
+// }

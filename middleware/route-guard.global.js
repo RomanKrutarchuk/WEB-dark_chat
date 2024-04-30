@@ -1,12 +1,12 @@
 import { useStore } from "~/store";
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  if (isValidRoot(to)) {
-    return;
-  } else {
-    console.log("root-guard");
-    return navigateTo("/authentication");
-  }
+  // if (isValidRoot(to)) {
+  //   return;
+  // } else {
+  //   console.log("root-guard");
+  //   return navigateTo("/authentication");
+  // }
 });
 
 function isValidRoot(to) {
