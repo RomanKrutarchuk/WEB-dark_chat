@@ -1,24 +1,31 @@
 <template>
   <div id="page">
-    <div class="flex flex-col">
-      <div class="w-screen h-screen p-2 flex flex-col items-start">
-        <div id="userProfile" v-if="userProfileData" class="w-400 border p-2">
-          <div v-for="(field, index) in userProfileFields" :key="index">
-            <div v-if="field === 'picture'">
-              <img :src="userProfileData[field]" class="" />
-            </div>
-            <div v-else>{{ userProfileData[field] }}</div>
+    <div class="h-screen flex flex-col">
+      <div
+        id="userProfile"
+        v-if="userProfileData"
+        class="w-screen md:w-400 md:h-screen p-2 bg-stone-900"
+      >
+        <div v-for="(field, index) in userProfileFields" :key="index">
+          <div
+            v-if="field === 'picture'"
+            class="flex items-center justify-center my-2"
+          >
+            <img :src="userProfileData[field]" />
           </div>
-          <hr />
-          <div v-if="activeUSers !== null">
-            <div>activeUsers:</div>
-            <div v-for="(user, index) in activeUSers" :key="index">
-              {{ user.email }}
-            </div>
+          <div v-else class="flex items-center justify-center my-2">
+            {{ userProfileData[field] }}
           </div>
         </div>
-        <div v-else>empty user data</div>
+        <hr />
+        <div v-if="activeUSers !== null">
+          <div>activeUsers:</div>
+          <div v-for="(user, index) in activeUSers" :key="index">
+            {{ user.email }}
+          </div>
+        </div>
       </div>
+      <div v-else>empty user data</div>
     </div>
   </div>
 </template>

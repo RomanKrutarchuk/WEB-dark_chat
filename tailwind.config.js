@@ -17,6 +17,8 @@ export default {
   theme: {
     colors: {
       green: "#008200",
+      "stone-700": "rgb(68 64 60)",
+      "stone-900": "rgb(28 25 23)",
     },
     width: {
       600: "600px",

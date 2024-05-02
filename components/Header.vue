@@ -1,9 +1,9 @@
 <template>
-  <div id="header" class="h-[50px] bg-white flex flex-row">
-    <NuxtLink class="ml-2" to="/">home</NuxtLink>
-    <NuxtLink class="ml-2" to="/profile">profile</NuxtLink>
-    <NuxtLink class="ml-2" to="/authentication">authentication</NuxtLink>
-    <button @click="logout()">logout</button>
+  <div id="header" class="h-[50px] flex flex-row">
+    <NuxtLink class="ml-2 flex items-center" to="/">home</NuxtLink>
+    <NuxtLink class="ml-2 flex items-center" to="/profile">profile</NuxtLink>
+    <NuxtLink class="ml-2 flex items-center" to="/authentication">authentication</NuxtLink>
+    <button class="ml-2 flex items-center" @click="logout()">logout</button>
   </div>
 </template>
 

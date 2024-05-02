@@ -17,16 +17,4 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ["./store/**", "./custom-folder/store/**"],
   },
-  // runtimeConfig: {
-  //   public: {
-  //     API_URL:
-  //       process.env.NODE_ENV === "development"
-  //         ? "http://localhost:3080"
-  //         : process.env.API_URL,
-  //     SOCKET_API_URL:
-  //       process.env.NODE_ENV === "development"
-  //         ? "http://localhost:3080"
-  //         : process.env.SOCKET_API_URL,
-  //   },
-  // },
 });
