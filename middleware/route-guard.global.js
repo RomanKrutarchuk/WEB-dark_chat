@@ -2,12 +2,13 @@ import { useAuthStore } from "~/store/user/auth";
 
 export default defineNuxtRouteMiddleware((to, from) => {
   // console.log("route-guard-check");
-  const store = useAuthStore();
+  const { user } = storeToRefs(useAuthStore());
+
   const userIsLoggined =
-    store.user != null && store.user.google ? true : false;
+    user.value != null && user.value.email ? true : false;
 
   if (!userIsLoggined) {
-    console.log({ userIsLoggined });
+    console.log('middleware.router-guard.userIsLoggined:',userIsLoggined);
     if (to.fullPath != "/authentication") {
       return navigateTo("/authentication");
     }

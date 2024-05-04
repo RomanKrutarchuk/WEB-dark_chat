@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import axios from "axios";
+
 const URL =
   process.env.NODE_ENV === "production"
     ? "https://api-1-0-0fru.onrender.com"
@@ -12,28 +13,50 @@ const URL =
 // }
 //JSON.stringify(googleData)
 export const useAuthStore = defineStore("auth", () => {
-  let user = ref(JSON.parse(localStorage.getItem("user")) || null);
+  const store = useStore()
+  const router = store.router
+  
+  let user = ref(null)
 
+  fetchUser()
+  async function fetchUser() {
+    const id = JSON.parse(localStorage.getItem("userID"))
+    if (!id) {
+      console.log('store.auth.fetchUser.id:',id);
+      return null
+    }
+    const data = JSON.stringify({ userID: id });
+    await axios.post(URL + "/auth", data).then((userProfileData) => {
+      const data = userProfileData.data
+      console.log('store.auth.fetchUser', { userProfileData: data })
+      // console.log({ userProfileDataById: userProfileData.data });
+      user.value = data
+      console.log('store.auth.fetchUser.redirect');
+      router.push({ path: "/profile" });
+
+    });
+  }
   async function login(credential) {
     const data = JSON.stringify({ token: credential });
-    await axios.post(URL + "/auth", data).then((userProfileData) => {
-      console.log(userProfileData);
+    user.value = await axios.post(URL + "/auth", data).then((userProfileData) => {
+      console.log({ userProfileData: userProfileData.data });
+      return userProfileData.data
     });
-
-    user.value = {};
-
-    // user.value.google = googleData;
-    // localStorage.setItem("user", JSON.stringify(user.value));
-    // this.router.push({ path: "/profile" });
+    localStorage.setItem("userID", JSON.stringify(user.value.userID));
+    console.log('store.auth.login.redirect');
+    router.push({ path: "/profile" });
   }
   async function logout() {
     console.log("store.user.authStore.logout");
     user.value = null;
-    localStorage.setItem("user", JSON.stringify(user.value));
-    this.router.push({ path: "/authentication" });
+    localStorage.setItem("userID", null);
+    console.log('store.auth.logout.redirect');
+    router.push({ path: "/authentication" });
   }
   return { user, login, logout };
 });
+
+
 
 // import { defineStore } from "pinia";
 // function getUserFields() {

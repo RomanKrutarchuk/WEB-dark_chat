@@ -29,9 +29,10 @@
     </div>
   </div>
 </template>
-
 <script>
 import { useUserStore } from "~/store/user";
+import { storeToRefs } from "pinia";
+
 export default {
   data() {
     return {
@@ -41,10 +42,10 @@ export default {
     };
   },
   mounted() {
-    const userStore = useUserStore();
+    const { user } = storeToRefs(useUserStore());
     // console.log({userStore});
-    if (userStore.user && userStore.user.google.email) {
-      this.userProfileData = userStore.user.google;
+    if (user.value && user.value.email) {
+      this.userProfileData = user;
 
       // const { $socket } = useNuxtApp();
       // $socket.emit("sendUserProfile", store.$state.userProfile);

@@ -7,7 +7,6 @@
     >
     <button class="ml-2 flex items-center" @click="logout()">logout</button>
   </div>
-  
 </template>
 
 <script>
@@ -15,10 +14,13 @@ import { useAuthStore } from "~/store/user/auth";
 
 export default {
   computed: {
-    userIsLoggined() {
-      const store = useAuthStore();
-      const userIsLoggined = store.user != null ? true : false;
-      return userIsLoggined;
+    userIsLoggined: {
+      get() {
+        // const store = useAuthStore();
+        const { user } = storeToRefs(useAuthStore());
+        if (user.value !== null && user.value.email !== null) return true;
+        return false;
+      },
     },
   },
   methods: {
