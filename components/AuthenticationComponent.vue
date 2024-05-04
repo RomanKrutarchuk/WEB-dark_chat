@@ -11,7 +11,11 @@
 <script>
 import GoogleSignInButton from "vue3-google-signin";
 import { useAuthStore } from "~/store/user/auth";
-
+import axios from "axios";
+const URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api-1-0-0fru.onrender.com"
+    : "http://localhost:3080";
 export default {
   components: { GoogleSignInButton },
   methods: {
@@ -24,19 +28,14 @@ export default {
     async postAuthenticationToken(loginResponse) {
       const { credential } = loginResponse;
       if (credential) {
-        await $fetch("/api/authentication/token", {
-          method: "POST",
-          body: { token: credential },
-        }).then((userProfileData) => {
-          this.assignUserData(userProfileData);
-          this.$emit("succes");
-        });
+        const store = useAuthStore()
+        store.login(credential)
       }
     },
-    assignUserData(data) {
-      const store = useAuthStore();
-      store.login(data);
-    },
+    // assignUserData(data) {
+    //   const store = useAuthStore();
+    //   store.login(data);
+    // },
   },
 };
 </script>

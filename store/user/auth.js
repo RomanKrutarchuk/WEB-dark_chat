@@ -1,21 +1,30 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-function getUserFields() {
-  return {
-    google: null,
-  };
-}
+import axios from "axios";
+const URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api-1-0-0fru.onrender.com"
+    : "http://localhost:3080";
+// function getUserFields() {
+//   return {
+//     google: null,
+//   };
+// }
+//JSON.stringify(googleData)
 export const useAuthStore = defineStore("auth", () => {
   let user = ref(JSON.parse(localStorage.getItem("user")) || null);
 
-  async function login(googleData) {
-    //   console.log("store.auth.login.googleData", googleData);
-    user.value = getUserFields();
-    user.value.google = googleData;
-    console.log("store.authStore.login", user.value);
-    // this.saveUserProfile();
-    localStorage.setItem("user", JSON.stringify(user.value));
-    this.router.push({ path: "/profile" });
+  async function login(credential) {
+    const data = JSON.stringify({ token: credential });
+    await axios.post(URL + "/auth", data).then((userProfileData) => {
+      console.log(userProfileData);
+    });
+
+    user.value = {};
+
+    // user.value.google = googleData;
+    // localStorage.setItem("user", JSON.stringify(user.value));
+    // this.router.push({ path: "/profile" });
   }
   async function logout() {
     console.log("store.user.authStore.logout");
