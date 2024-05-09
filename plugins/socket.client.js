@@ -4,9 +4,9 @@ const URL =
     ? "https://api-1-0-0fru.onrender.com/"
     : "http://localhost:3080";
 const socket = io(URL);
-socket.on("hello", (data) => {
-  console.log(data);
-});
+// socket.on("hello", (data) => {
+//   console.log(data);
+// });
 
 export default defineNuxtPlugin(() => {
   return {

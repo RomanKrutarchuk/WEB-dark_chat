@@ -6,35 +6,31 @@ const URL =
   process.env.NODE_ENV === "production"
     ? "https://api-1-0-0fru.onrender.com"
     : "http://localhost:3080";
-// function getUserFields() {
-//   return {
-//     google: null,
-//   };
-// }
-//JSON.stringify(googleData)
+
 export const useAuthStore = defineStore("auth", () => {
   const store = useStore()
   const router = store.router
-  
-  let user = ref(null)
+
+  const id = getId()
+  const user = ref(null)
 
   fetchUser()
   async function fetchUser() {
-    const id = JSON.parse(localStorage.getItem("userID"))
     if (!id) {
-      console.log('store.auth.fetchUser.id:',id);
-      return null
+      console.log('store.auth.fetchUser.missingStorageId');
+      return false
     }
-    const data = JSON.stringify({ userID: id });
-    await axios.post(URL + "/auth", data).then((userProfileData) => {
-      const data = userProfileData.data
-      console.log('store.auth.fetchUser', { userProfileData: data })
-      // console.log({ userProfileDataById: userProfileData.data });
-      user.value = data
-      console.log('store.auth.fetchUser.redirect');
-      router.push({ path: "/profile" });
+    if (id) {
+      const data = JSON.stringify({ userID: id });
+      await axios.post(URL + "/auth", data).then((userProfileData) => {
+        const data = userProfileData.data
+        console.log('store.auth.fetchUser', { userProfileData: data })
+        // console.log({ userProfileDataById: userProfileData.data });
+        user.value = data
+        return data
+      });
+    }
 
-    });
   }
   async function login(credential) {
     const data = JSON.stringify({ token: credential });
@@ -53,7 +49,10 @@ export const useAuthStore = defineStore("auth", () => {
     console.log('store.auth.logout.redirect');
     router.push({ path: "/authentication" });
   }
-  return { user, login, logout };
+  function getId(){
+    return JSON.parse(localStorage.getItem("userID"))
+  }
+  return { user, login, logout, getId};
 });
 
 
