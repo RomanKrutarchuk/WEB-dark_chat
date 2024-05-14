@@ -2,12 +2,14 @@ import { defineStore, storeToRefs } from "pinia";
 import { useUserStore } from "~/store/user";
 import { ref } from "vue";
 import axios from "axios";
-const URL =
-    process.env.NODE_ENV === "production"
-        ? "https://api-1-0-0fru.onrender.com"
-        : "http://localhost:3080";
+
+
+
 
 export const useUsersStore = defineStore("users", () => {
+    const { $URLs } = useNuxtApp()
+    const URL = $URLs.API
+    
     const { $socket } = useNuxtApp()
     const { user } = storeToRefs(useUserStore())
     const users = ref([])

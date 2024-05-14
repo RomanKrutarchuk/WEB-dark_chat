@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "nuxt-vue3-google-signin", "@pinia/nuxt"],
@@ -17,4 +19,5 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ["./store/**", "./custom-folder/store/**"],
   },
+  
 });

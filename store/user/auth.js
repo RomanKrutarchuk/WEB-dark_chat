@@ -2,12 +2,11 @@ import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 import axios from "axios";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? "https://api-1-0-0fru.onrender.com"
-    : "http://localhost:3080";
+
 
 export const useAuthStore = defineStore("auth", () => {
+  const { $URLs } = useNuxtApp()
+  const URL = $URLs.API
 
   const store = useStore()
   const router = store.router
