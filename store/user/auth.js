@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import axios from "axios";
 
 const URL =
@@ -8,19 +8,37 @@ const URL =
     : "http://localhost:3080";
 
 export const useAuthStore = defineStore("auth", () => {
+
   const store = useStore()
   const router = store.router
-
+  const fetching = ref(false)
   const id = getId()
   const user = ref(null)
 
-  fetchUser()
+  async function userIsLoggined() {
+    console.log("store.user.auth.userIsLoggined...");
+    return new Promise((resolve, reject) => {
+      // console.log("fetching", fetching.value);
+      if (fetching.value) {
+        watch(user, (newValue, oldValue) => {
+          console.log("newValue", newValue);
+          if (newValue != null) {
+            resolve(true)
+          } else resolve(false)
+        })
+      } else {
+        if (user.value != null) resolve(true)
+        resolve(false)
+      }
+    })
+  }
   async function fetchUser() {
     if (!id) {
-      console.log('store.auth.fetchUser.missingStorageId');
-      return false
+      console.log('store.user.auth.fetchUser.missingStorageId');
+      // user.value = null
     }
     if (id) {
+      fetching.value = true
       const data = JSON.stringify({ userID: id });
       await axios.post(URL + "/auth", data).then((userProfileData) => {
         const data = userProfileData.data
@@ -29,6 +47,7 @@ export const useAuthStore = defineStore("auth", () => {
         user.value = data
         return data
       });
+      fetching.value = false
     }
 
   }
@@ -49,39 +68,10 @@ export const useAuthStore = defineStore("auth", () => {
     console.log('store.auth.logout.redirect');
     router.push({ path: "/authentication" });
   }
-  function getId(){
+  function getId() {
     return JSON.parse(localStorage.getItem("userID"))
   }
-  return { user, login, logout, getId};
+
+
+  return { user, login, logout, fetchUser, userIsLoggined };
 });
-
-
-
-// import { defineStore } from "pinia";
-// function getUserFields() {
-//   return {
-//     google: null,
-//   };
-// }
-// export const useAuthStore = defineStore("auth",{
-//   state: () => ({
-//     user: JSON.parse(localStorage.getItem("user")) || null,
-//   }),
-//   actions: {
-//     async login(googleData) {
-//       //   console.log("store.auth.login.googleData", googleData);
-//       this.user = getUserFields();
-//       this.user.google = googleData;
-//       console.log("store.authStore.login", this.user);
-//       // this.saveUserProfile();
-//       localStorage.setItem("user", JSON.stringify(this.user));
-//       this.router.push({ path: "/profile" });
-//     },
-//     async logout() {
-//       console.log("store.user.authStore.logout");
-//       this.user = null;
-//       localStorage.setItem("user", JSON.stringify(this.user));
-//       this.router.push({ path: "/authentication" });
-//     },
-//   },
-// });
