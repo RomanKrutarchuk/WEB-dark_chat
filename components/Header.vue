@@ -1,10 +1,8 @@
 <template>
-  <div v-if="userIsLoggined" id="header" class="h-[50px] flex flex-row">
+  <div v-if="userIsLoggined" id="header" class="flex flex-row items-center my-1">
     <NuxtLink class="ml-2 flex items-center" to="/">home</NuxtLink>
     <NuxtLink class="ml-2 flex items-center" to="/profile">profile</NuxtLink>
-    <NuxtLink class="ml-2 flex items-center" to="/authentication"
-      >authentication</NuxtLink
-    >
+    <NuxtLink class="ml-2 flex items-center" to="/authentication">authentication</NuxtLink>
     <button class="ml-2 flex items-center" @click="logout()">logout</button>
   </div>
 </template>

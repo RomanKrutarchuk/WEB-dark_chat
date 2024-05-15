@@ -15,19 +15,25 @@ export const useAuthStore = defineStore("auth", () => {
   const user = ref(null)
 
   async function userIsLoggined() {
-    console.log("store.user.auth.userIsLoggined...");
+    console.log("store.user.auth.awaitUserAuthStatus...");
     return new Promise((resolve, reject) => {
-      // console.log("fetching", fetching.value);
       if (fetching.value) {
         watch(user, (newValue, oldValue) => {
-          console.log("newValue", newValue);
+          // console.log("store.user.auth.authStatusLoggined", true);
           if (newValue != null) {
-            resolve(true)
-          } else resolve(false)
+            return resolve(true)
+          } else {
+            // console.log("store.user.auth.authStatusLoggined", false);
+            return resolve(false)
+          }
         })
       } else {
-        if (user.value != null) resolve(true)
-        resolve(false)
+        if (user.value != null) {
+          // console.log("store.user.auth.authStatusLoggined", true);
+          return resolve(true)
+        }
+        // console.log("store.user.auth.authStatusLoggined", false);
+        return resolve(false)
       }
     })
   }
@@ -38,7 +44,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
     if (id) {
       fetching.value = true
-      const data = JSON.stringify({ userID: id });
+      const data = JSON.stringify({ id: id });
       await axios.post(URL + "/auth", data).then((userProfileData) => {
         const data = userProfileData.data
         console.log('store.auth.fetchUser', { userProfileData: data })
@@ -56,19 +62,19 @@ export const useAuthStore = defineStore("auth", () => {
       console.log({ userProfileData: userProfileData.data });
       return userProfileData.data
     });
-    localStorage.setItem("userID", JSON.stringify(user.value.userID));
+    localStorage.setItem("id", JSON.stringify(user.value.id));
     console.log('store.auth.login.redirect');
     router.push({ path: "/profile" });
   }
   async function logout() {
     console.log("store.user.authStore.logout");
     user.value = null;
-    localStorage.setItem("userID", null);
+    localStorage.setItem("id", null);
     console.log('store.auth.logout.redirect');
     router.push({ path: "/authentication" });
   }
   function getId() {
-    return JSON.parse(localStorage.getItem("userID"))
+    return JSON.parse(localStorage.getItem("id"))
   }
 
 

@@ -3,9 +3,6 @@ import { useUserStore } from "~/store/user";
 import { ref } from "vue";
 import axios from "axios";
 
-
-
-
 export const useUsersStore = defineStore("users", () => {
     const { $URLs } = useNuxtApp()
     const URL = $URLs.API
@@ -14,8 +11,8 @@ export const useUsersStore = defineStore("users", () => {
     const { user } = storeToRefs(useUserStore())
     const users = ref([])
 
-    if (user.value != null && user.value.userID) {
-        const id = user.value.userID
+    if (user.value != null && user.value.id) {
+        const id = user.value.id
         $socket.emit("clientSendUserId", id)
         // console.log("clientSendUserId");
         $socket.on("serverEmitAllUsers", (data) => {
@@ -28,7 +25,7 @@ export const useUsersStore = defineStore("users", () => {
     async function setUsersData(ids) {
         let usersCount = []
         for (let index = 0; index < ids.length;) {
-            const data = JSON.stringify({ userID: ids[index] })
+            const data = JSON.stringify({ id: ids[index] })
             await axios.post(URL + "/getUserData", data).then((res) => {
                 // console.log("res", res.data);
                 usersCount.push(res.data)
