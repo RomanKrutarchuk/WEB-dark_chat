@@ -1,9 +1,13 @@
 <template>
+  <!-- page bag scroll -->
   <div id="page">
     <div v-if="userProfileData" class="w-screen h-screen p-2">
       <div id="profile" class="mb-2">
         <div v-for="(field, index) in userProfileFields" :key="index">
-          <div v-if="field === 'picture'" class="border border-white w-[80px] p-1">
+          <div
+            v-if="field === 'picture'"
+            class="border border-white w-[80px] p-1"
+          >
             <img class="grayscale" :src="userProfileData[field]" />
           </div>
           <div v-else class="flex items-center">
@@ -20,12 +24,12 @@
       <table id="users" class="w-screen mb-2">
         <p>active</p>
         <tr class="">
-          <td class="border border-white first ">index</td>
+          <td class="border border-white first">index</td>
           <td class="border border-white">name</td>
         </tr>
         <tr v-for="(user, index) in activeUsers" :key="index">
-          <td class="border border-white ">{{ index }}</td>
-          <td class="border border-white ">{{ user.name }}</td>
+          <td class="border border-white">{{ index }}</td>
+          <td class="border border-white">{{ user.name }}</td>
         </tr>
       </table>
       <div id="room" class="">
@@ -43,24 +47,40 @@
         <table id="room" class="w-screen mb-2">
           <p>room</p>
           <tr class="">
-            <td v-for="field in roomFields" class="border border-white">{{ field }}</td>
+            <td
+              v-for="(field, index) in roomFields"
+              :key="index"
+              class="border border-white"
+            >
+              {{ field }}
+            </td>
           </tr>
           <tr v-for="(player, index) in players" :key="index" id="players">
             <td class="border border-white first">{{ index }}</td>
-            <td v-if="player.id" class="border border-white " @click="exit()">{{ player.id }}</td>
-            <td v-else-if="!player.id" class="border border-white" @click="join(index)">...join</td>
+            <td v-if="player.id" class="border border-white" @click="exit()">
+              {{ player.id }}
+            </td>
+            <td
+              v-else-if="!player.id"
+              class="border border-white"
+              @click="join(index)"
+            >
+              ...join
+            </td>
           </tr>
         </table>
 
-
         <div id="field" class="w-screen flex justify-center">
           <div class="w-300 h-300 border border-white container">
-            <div id="cell" v-for="(cell, index) in cells" :key="index" class="w-[auto] h-[auto] border border-white">
-            </div>
+            <div
+              id="cell"
+              v-for="(cell, index) in cells"
+              :key="index"
+              class="w-[auto] h-[auto] border border-white"
+            ></div>
           </div>
         </div>
       </div>
-
     </div>
     <div v-else>empty user data</div>
   </div>
@@ -75,7 +95,15 @@ export default {
     return {
       room: null,
       cells: [
-        { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 },
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 },
+        { id: 6 },
+        { id: 7 },
+        { id: 8 },
+        { id: 9 },
       ],
       roomFields: ["plase", "name"],
       userProfileFields: ["picture", "name", "email"],
@@ -87,33 +115,33 @@ export default {
     userProfileData: {
       get() {
         const { user } = storeToRefs(useUserStore());
-        return user.value
+        return user.value;
       },
     },
     activeUsers: {
       get() {
-        const { users } = storeToRefs(useUsersStore())
-        return users.value
+        const { users } = storeToRefs(useUsersStore());
+        return users.value;
       },
     },
     players: {
       get() {
-        const { room } = storeToRefs(useRoomStore())
-        return room.value
-      }
-    }
+        const { room } = storeToRefs(useRoomStore());
+        return room.value;
+      },
+    },
   },
   methods: {
     join(index) {
-      const { roomSetUser } = useRoomStore()
-      roomSetUser(index, this.userProfileData.id)
+      const { roomSetUser } = useRoomStore();
+      roomSetUser(index, this.userProfileData.id);
     },
     exit() {
-      const { roomExcludeUser } = useRoomStore()
-      const id = this.userProfileData.id
-      roomExcludeUser(id)
+      const { roomExcludeUser } = useRoomStore();
+      const id = this.userProfileData.id;
+      roomExcludeUser(id);
       console.log("exit", id);
-    }
+    },
   },
 };
 </script>
@@ -135,6 +163,6 @@ export default {
 
 .first {
   width: 20px;
-  overflow: hidden
+  overflow: hidden;
 }
 </style>

@@ -7,7 +7,6 @@ import axios from "axios";
 export const useAuthStore = defineStore("auth", () => {
   const { $URLs } = useNuxtApp()
   const URL = $URLs.API
-
   const store = useStore()
   const router = store.router
   const fetching = ref(false)
@@ -38,9 +37,15 @@ export const useAuthStore = defineStore("auth", () => {
     })
   }
   async function fetchUser() {
+    console.log("store.user.auth.fetchUser...");
+    const apiHasWork = await axios.get(URL).then((res) => {
+      return true
+    }
+    ).catch(error => {
+      return false
+    })
     if (!id) {
       console.log('store.user.auth.fetchUser.missingStorageId');
-      // user.value = null
     }
     if (id) {
       fetching.value = true
