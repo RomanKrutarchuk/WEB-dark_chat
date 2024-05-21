@@ -1,7 +1,7 @@
 <template>
   <!-- page bag scroll -->
-  <div id="page">
-    <div v-if="userProfileData" class="w-screen h-screen p-2">
+  <div id="page" class="overflow-y-scroll">
+    <div v-if="userProfileData" class="w-screen h-max p-2">
       <div id="profile" class="mb-2">
         <div v-for="(field, index) in userProfileFields" :key="index">
           <div
@@ -21,7 +21,7 @@
             {{ user.name }}
           </div> -->
       <!-- </div> -->
-      <table id="users" class="w-screen mb-2">
+      <table id="users" class="w-screen h-max mb-2">
         <p>active</p>
         <tr class="">
           <td class="border border-white first">index</td>
@@ -32,7 +32,7 @@
           <td class="border border-white">{{ user.name }}</td>
         </tr>
       </table>
-      <div id="room" class="">
+      <div id="room" class="h-max">
         <!-- <p>Room</p> -->
 
         <!-- <div v-for="(player, index) in players" :key="index" id="players" class="w-screen h-[20px]">
@@ -55,22 +55,27 @@
               {{ field }}
             </td>
           </tr>
-          <tr v-for="(player, index) in players" :key="index" id="players">
+          <tr
+            v-for="(player, index) in activePlayers"
+            :key="index"
+            id="players"
+          >
             <td class="border border-white first">{{ index }}</td>
-            <td v-if="player.id" class="border border-white" @click="exit()">
-              {{ player.id }}
-            </td>
             <td
-              v-else-if="!player.id"
-              class="border border-white"
-              @click="join(index)"
+              v-if="player != null"
+              class="border border-white flex flex-row"
+              @click="exit()"
             >
-              ...join
+              {{ player.name }}
+              <p class="ml-2">exit</p>
+            </td>
+            <td v-else class="border border-white" @click="join(index)">
+              <LoadingIndicator :color="'white'" :text="'join'" />
             </td>
           </tr>
         </table>
 
-        <div id="field" class="w-screen flex justify-center">
+        <div id="field" class="w-screen h-max flex justify-center">
           <div class="w-300 h-300 border border-white container">
             <div
               id="cell"
@@ -90,7 +95,9 @@ import { useUserStore } from "~/store/user";
 import { useUsersStore } from "~/store/users";
 import { useRoomStore } from "~/store/room";
 import { storeToRefs } from "pinia";
+import LoadingIndicator from "~/components/LoadingIndicator.vue";
 export default {
+  components: { LoadingIndicator },
   data() {
     return {
       room: null,
@@ -124,7 +131,7 @@ export default {
         return users.value;
       },
     },
-    players: {
+    activePlayers: {
       get() {
         const { room } = storeToRefs(useRoomStore());
         return room.value;

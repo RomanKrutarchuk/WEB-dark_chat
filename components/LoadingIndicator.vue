@@ -1,10 +1,34 @@
 <template>
-  <div id="loadingIndicator" class="loading-indicator">
+  <div
+    id="loadingIndicator"
+    class="loading-indicator"
+    :style="{ color: color }"
+  >
     <div class="dot">#</div>
     <div class="dot">#</div>
     <div class="dot">#</div>
+    <div v-if="text">{{text}}</div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    color: {
+      require: false,
+      default: () => {
+        return "black";
+      },
+    },
+    text: {
+      require: false,
+      default: () => {
+        return null;
+      },
+    },
+  },
+};
+</script>
+
 <style scoped>
 .loading-indicator {
   display: flex;
@@ -14,7 +38,6 @@
 
 .dot {
   width: max-content;
-  color: black;
   opacity: 0;
   animation: fade 1.5s infinite;
 }
