@@ -22,7 +22,7 @@
           </div> -->
       <!-- </div> -->
       <table id="users" class="w-screen h-max mb-2">
-        <p>active</p>
+        <!-- <p>active</p> -->
         <tr class="">
           <td class="border border-white first">index</td>
           <td class="border border-white">name</td>
@@ -45,7 +45,7 @@
             </div>
           </div> -->
         <table id="room" class="w-screen mb-2">
-          <p>room</p>
+          <!-- <p>room isReady:{{ roomIsReady }}</p> -->
           <tr class="">
             <td
               v-for="(field, index) in roomFields"
@@ -75,17 +75,73 @@
           </tr>
         </table>
 
-        <div id="field" class="w-screen h-max flex justify-center">
-          <div id="currentMove">{{currentMove}}</div>
-          <div class="w-300 h-300 border border-white container">
+        <div
+          v-if="roomIsReady && currentWalker.id"
+          id="field"
+          class="w-screen h-max flex flex-col justify-center relative"
+        >
+          <div
+            v-if="showWin"
+            class="absolute w-screen h-max p-2 bg-white text-black top-[50%]"
+          >
+            Player win: {{ showWinPlayer }}
+          </div>
+          <div id="currentMove" class="mb-2 flex flex-row">
+            move:{{ currentWalker.name }}
+            <LoadingIndicator
+              v-if="currentWalker.id === userProfileData.id"
+              class="ml-2"
+              :color="'white'"
+              :text="'walk'"
+            />
+          </div>
+          <div
+            class="w-[250px] h-[250px] md:w-300 md:h-300 border border-white container"
+            v-if="cells"
+          >
             <div
               id="cell"
               v-for="(cell, index) in cells"
               :key="index"
-              class="w-[auto] h-[auto] border border-white"
-            ></div>
+              class="w-[auto] h-[auto] border border-white text-white"
+            >
+              <div v-if="cell.id" class="w-screen h-screen">
+                <div
+                  v-if="cell.id === userProfileData.id"
+                  class="w-screen h-screen bg-green-900"
+                ></div>
+                <div v-else class="w-screen h-screen bg-red-900"></div>
+              </div>
+              <div
+                v-if="!cell.id && userProfileData.id === currentWalker.id"
+                @click="selectCell(cell)"
+                class="w-screen h-screen bg-stone-500 flex items-center justify-center"
+              >
+                select
+              </div>
+              <div
+                v-else-if="!cell.id"
+                class="w-screen h-screen bg-stone-500 flex items-center justify-center"
+              >
+                await
+              </div>
+            </div>
           </div>
         </div>
+        <table v-if="scoreBar" id="scoreBar" class="w-screen h-max mb-2">
+          <p>Score</p>
+          <tr class="">
+            <td class="border border-white first">index</td>
+            <td class="border border-white">name</td>
+            <td class="border border-white">score</td>
+          </tr>
+          <tr v-for="(player, index) in scoreBar" :key="index">
+            <td class="border border-white first">{{ index }}</td>
+            <td class="border border-white first">{{ player.name }}</td>
+            <td class="border border-white first">{{ player.score }}</td>
+            <!-- <td class="border border-white first">{{ player}}</td> -->
+          </tr>
+        </table>
       </div>
     </div>
     <div v-else>empty user data</div>
@@ -102,21 +158,13 @@ export default {
   data() {
     return {
       room: null,
-      cells: [
-    { id: null, index: 1 },
-    { id: null, index: 2 },
-    { id: null, index: 3 },
-    { id: null, index: 4 },
-    { id: null, index: 5 },
-    { id: null, index: 6 },
-    { id: null, index: 7 },
-    { id: null, index: 8 },
-    { id: null, index: 9 },
-  ],
       roomFields: ["plase", "name"],
       userProfileFields: ["picture", "name", "email"],
       users: null,
       loading: false,
+      showWin: false,
+      showWinPlayer: null,
+      scoreBar: null,
     };
   },
   computed: {
@@ -129,7 +177,12 @@ export default {
     activeUsers: {
       get() {
         const { users } = storeToRefs(useUsersStore());
+        this.setScoreBarData(users);
+
         return users.value;
+      },
+      set() {
+        this.scoreBar = 10;
       },
     },
     activePlayers: {
@@ -138,9 +191,26 @@ export default {
         return room.value;
       },
     },
-    currentMove(){
-      return 0
-    }
+    roomIsReady: {
+      get() {
+        const { roomIsReady } = storeToRefs(useRoomStore());
+        return roomIsReady.value;
+      },
+    },
+    currentWalker: {
+      get() {
+        const { currentWalker } = storeToRefs(useRoomStore());
+        if (this.activePlayers[currentWalker.value])
+          return this.activePlayers[currentWalker.value];
+        return false;
+      },
+    },
+    cells: {
+      get() {
+        const { cells } = storeToRefs(useRoomStore());
+        return cells.value;
+      },
+    },
   },
   methods: {
     join(index) {
@@ -153,6 +223,40 @@ export default {
       roomExcludeUser(id);
       console.log("exit", id);
     },
+    selectCell(cell) {
+      console.log("selectCell", cell);
+      const data = {
+        index: cell.index,
+        id: this.userProfileData.id,
+      };
+      const { $socket } = useNuxtApp();
+      $socket.emit("selectCell", JSON.stringify(data));
+    },
+    setScoreBarData(users) {
+      this.scoreBar = users.value.map((user) => {
+        return { id: user.id, name: user.name, score: 0 };
+      });
+    },
+    showWinBar(id) {
+      this.showWin = true;
+      if (this.activePlayers.find((player) => player.id === id)) {
+        this.showWinPlayer = this.activePlayers.find(
+          (player) => player.id === id
+        ).name;
+      }
+      setTimeout(() => {
+        this.showWin = false;
+        this.showWinPlayer = false;
+      }, 2000);
+    },
+  },
+  mounted() {
+    const { $socket } = useNuxtApp();
+
+    $socket.on("room.playerWin", (id) => {
+      this.showWinBar(id);
+      this.scoreBar.find((player) => player.id === id).score++;
+    });
   },
 };
 </script>
