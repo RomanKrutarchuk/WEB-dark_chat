@@ -61,15 +61,30 @@ export const useAuthStore = defineStore("auth", () => {
     }
 
   }
-  async function login(credential) {
-    const data = JSON.stringify({ token: credential });
-    user.value = await axios.post(URL + "/auth", data).then((userProfileData) => {
-      console.log({ userProfileData: userProfileData.data });
-      return userProfileData.data
-    });
-    localStorage.setItem("id", JSON.stringify(user.value.id));
-    console.log('store.auth.login.redirect');
-    router.push({ path: "/profile" });
+  async function login(value) {
+    console.log("store.auth.login.value", value);
+    if (value.credential) {
+      const credential = value.credential
+      const data = JSON.stringify({ token: credential });
+      user.value = await axios.post(URL + "/auth", data).then((userProfileData) => {
+        console.log({ userProfileData: userProfileData.data });
+        return userProfileData.data
+      });
+      localStorage.setItem("id", JSON.stringify(user.value.id));
+      console.log('store.auth.login.redirect');
+      router.push({ path: "/profile" });
+    } else
+      if (value.authData) {
+        const authData = value.authData
+        const data = JSON.stringify({ authData });
+        user.value = await axios.post(URL + "/auth", data).then((userProfileData) => {
+          console.log({ userProfileData: userProfileData.data });
+          return userProfileData.data
+        });
+        localStorage.setItem("id", JSON.stringify(user.value.id));
+        console.log('store.auth.login.redirect');
+        router.push({ path: "/profile" });
+      }
   }
   async function logout() {
     console.log("store.user.authStore.logout");

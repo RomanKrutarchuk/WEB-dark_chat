@@ -1,6 +1,6 @@
 <template>
   <!-- page bag scroll -->
-  <div id="page" class="overflow-y-scroll">
+  <div id="page" class="overflow-y-auto">
     <div v-if="userProfileData" class="w-screen h-max p-2">
       <div id="profile" class="mb-2">
         <div v-for="(field, index) in userProfileFields" :key="index">
@@ -67,7 +67,7 @@
               @click="exit()"
             >
               {{ player.name }}
-              <p class="ml-2">exit</p>
+              <p v-if="player.id === userProfileData.id" class="ml-2">exit</p>
             </td>
             <td v-else class="border border-white" @click="join(index)">
               <LoadingIndicator :color="'white'" :text="'join'" />
@@ -76,6 +76,7 @@
         </table>
 
         <div id="field" class="w-screen h-max flex justify-center">
+          <div id="currentMove">{{currentMove}}</div>
           <div class="w-300 h-300 border border-white container">
             <div
               id="cell"
@@ -102,16 +103,16 @@ export default {
     return {
       room: null,
       cells: [
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-        { id: 4 },
-        { id: 5 },
-        { id: 6 },
-        { id: 7 },
-        { id: 8 },
-        { id: 9 },
-      ],
+    { id: null, index: 1 },
+    { id: null, index: 2 },
+    { id: null, index: 3 },
+    { id: null, index: 4 },
+    { id: null, index: 5 },
+    { id: null, index: 6 },
+    { id: null, index: 7 },
+    { id: null, index: 8 },
+    { id: null, index: 9 },
+  ],
       roomFields: ["plase", "name"],
       userProfileFields: ["picture", "name", "email"],
       users: null,
@@ -137,6 +138,9 @@ export default {
         return room.value;
       },
     },
+    currentMove(){
+      return 0
+    }
   },
   methods: {
     join(index) {

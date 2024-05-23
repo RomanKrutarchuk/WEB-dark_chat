@@ -25,7 +25,7 @@ export default {
       const { credential } = loginResponse;
       if (credential) {
         const store = useAuthStore()
-        store.login(credential)
+        store.login({credential})
       }
     },
     // assignUserData(data) {
